@@ -1,0 +1,73 @@
+# Project Analysis: Plantation Management System (KNOWEB EstateIQ)
+
+## 1. Project Overview
+**What is this?**
+A **SaaS-based Plantation Management System** (ERP) designed to digitize the entire operation of tea, rubber, and cinnamon estates. It replaces manual books with a modern digital platform.
+
+**Who is it for?**
+- **Field Officers**: Mobile-first users who record daily attendance (Muster), Harvest yields, and request stock.
+- **Managers**: Desktop users who plan work programs, approve requests, and analyze financial/crop performance.
+- **Super Admin**: The SaaS vendor managing subscriptions for multiple estates.
+
+**Key Features**:
+- **Digital Muster**: Drag-and-drop worker assignment (Visual Attendance).
+- **Crop Book**: Real-time tracking of daily harvest vs. budget.
+- **Inventory Control**: Request -> Approve -> Issue workflow.
+- **Cost Analysis**: Calculating Cost-Per-Kilo in real-time.
+- **AI "Supervisor"**: Automated recommendations based on weather and historical data.
+
+---
+
+## 2. Technical Architecure
+
+### Frontend (User Interface)
+- **Tech**: React 18+ (TypeScript), Material UI / Ant Design.
+- **Style**: Data-dense grids, "Green/White" branding, Tabular layouts for financial data.
+- **Key Modules**:
+    - **Muster Interface**: Drag-and-drop worker allocation.
+    - **Dashboard**: High-density KPI tables (Yield, Cost, Balance).
+    - **Chat**: Internal messaging system for approvals/correspondence.
+
+### Backend (Infrastructure)
+- **Tech**: Java Spring Boot 3.x (Microservices).
+- **Database**: PostgreSQL (Multi-Tenant schema with `tenant_id`).
+- **Services**:
+    - `Identity Service`: Auth & User Roles.
+    - `Operations Service`: Muster, Harvest, Work Program.
+    - `Inventory Service`: Stock, Orders, Suppliers.
+    - `Finance Service`: Payroll calculations, Cost analysis.
+- **AI Core**: Python/LangChain service for predictive staffing and weather alerts.
+
+---
+
+## 3. Implementation Roadmap (How we will build it)
+
+We will follow a **Backend-First** approach to ensure the complex data relationships are solid before building the UI.
+
+### Phase 1: Foundation & Backend Core
+1.  **Project Scaffolding**: Create the Spring Boot Microservices structure.
+2.  **Database Implementation**: Execute the `plantation_db_schema.sql` and create Java Entities.
+3.  **API Development**: Build REST APIs for:
+    - User Authentication (Login).
+    - Master Data (Divisions, Fields, Workers).
+    - Operations (Muster submission, Harvest recording).
+
+### Phase 2: Frontend "Shell" & Basic Forms
+1.  **React Setup**: Initialize the project with the specific Green/White theme.
+2.  **Authentication UI**: Build the Login Screen (as seen in Mockup 2).
+3.  **Navigation**: Implement the Sidebar for Field Officers vs Managers.
+
+### Phase 3: Complex Modules (The "Grids")
+1.  **Digital Muster**: Build the interactive worker assignment screen (Mockup 3).
+2.  **Crop Book**: Build the large data table for daily yield tracking (Mockup 2, Batch 3).
+3.  **Financials**: Implement the Real-time Cost Analysis view.
+
+### Phase 4: AI & Polish
+1.  **AI Integration**: Connect Weather API and build the "Supervisor Agent".
+2.  **Chat System**: Implement the Correspondence module.
+
+---
+
+## 4. Next Step
+**Action**: Begin **Phase 1: Foundation**.
+**Task**: Scaffold the Spring Boot Project and set up the PostgreSQL database connection using the provided schema.
