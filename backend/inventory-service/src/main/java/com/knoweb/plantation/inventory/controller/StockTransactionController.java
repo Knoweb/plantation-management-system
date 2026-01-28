@@ -2,6 +2,7 @@ package com.knoweb.plantation.inventory.controller;
 
 import com.knoweb.plantation.inventory.model.StockTransaction;
 import com.knoweb.plantation.inventory.repository.StockTransactionRepository;
+import com.knoweb.plantation.inventory.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,18 +17,33 @@ import java.util.UUID;
 public class StockTransactionController {
 
     @Autowired
-    private StockTransactionRepository stockTransactionRepository;
+    private StockService stockService;
 
     @GetMapping
     public List<StockTransaction> getAllTransactions() {
-        return stockTransactionRepository.findAll();
+        return stockService.getAllTransactions();
     }
 
     @PostMapping
     public StockTransaction createTransaction(@RequestBody StockTransaction transaction) {
-        if (transaction.getDate() == null) {
-            transaction.setDate(LocalDateTime.now());
+        return stockService.createRequest(transaction);
+    }
+
+    @PutMapping("/{id}/approve")
+    public ResponseEntity<StockTransaction> approveTransaction(@PathVariable UUID id) {
+        try {
+            return ResponseEntity.ok(stockService.approveRequest(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
         }
-        return stockTransactionRepository.save(transaction);
+    }
+
+    @PutMapping("/{id}/reject")
+    public ResponseEntity<StockTransaction> rejectTransaction(@PathVariable UUID id) {
+        try {
+            return ResponseEntity.ok(stockService.rejectRequest(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

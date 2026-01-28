@@ -10,6 +10,7 @@ import { StockApprovalPage } from './pages/stock/StockApprovalPage';
 import { FieldOfficerLayout } from './widgets/layout/FieldOfficerLayout';
 import { MorningMusterPage } from './pages/field-dashboard/MorningMusterPage';
 import { WorkProgramPage } from './pages/field-dashboard/WorkProgramPage';
+import { InventoryPage } from './pages/inventory/InventoryPage';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="digital-muster" element={<DigitalMusterPage />} />
             <Route path="harvest" element={<HarvestPage />} />
             <Route path="orders" element={<StockApprovalPage />} />
+            <Route path="inventory" element={<InventoryPage />} />
           </Route>
 
           {/* Field Officer Dashboard Routes */}

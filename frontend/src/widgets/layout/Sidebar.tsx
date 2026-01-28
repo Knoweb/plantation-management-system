@@ -26,6 +26,7 @@ const menuItems = [
     { text: 'Muster Logs', icon: <ListAlt />, path: '/dashboard/muster' },
     { text: 'Crop Books', icon: <Agriculture />, path: '/dashboard/harvest' },
     { text: 'Stock Approvals', icon: <Inventory />, path: '/dashboard/orders' },
+    { text: 'Inventory', icon: <ListAlt />, path: '/dashboard/inventory' },
     { text: 'KPI', path: '/dashboard/kpi' },
     { text: 'Work Distribution', path: '/dashboard/work-distribution' },
 ];

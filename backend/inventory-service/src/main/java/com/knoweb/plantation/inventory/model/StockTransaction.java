@@ -26,18 +26,20 @@ public class StockTransaction {
     private Double quantity;
     private LocalDateTime date;
     private String reference; // e.g., PO-123, FIELD-F001
+    private String status; // PENDING, APPROVED, REJECTED
 
     public StockTransaction() {
     }
 
     public StockTransaction(UUID id, InventoryItem item, String transactionType, Double quantity, LocalDateTime date,
-            String reference) {
+            String reference, String status) {
         this.id = id;
         this.item = item;
         this.transactionType = transactionType;
         this.quantity = quantity;
         this.date = date;
         this.reference = reference;
+        this.status = status;
     }
 
     public UUID getId() {
@@ -86,5 +88,13 @@ public class StockTransaction {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

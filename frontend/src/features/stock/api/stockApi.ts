@@ -1,43 +1,26 @@
-import type { StockRequest } from '../model/stock';
+import axios from 'axios';
+import type { StockTransaction } from '../../inventory/model/inventory';
 
-const MOCK_STOCK_REQUESTS: StockRequest[] = [
-    {
-        requestId: 'R001',
-        divisionId: 'GC Division',
-        item: 'U709 (Fertilizer)',
-        unit: 'Kg',
-        quantity: 300,
-        valueRs: 39000,
-        availability: 12400,
-        status: 'PENDING',
-        createdAt: '2025-10-24'
-    },
-    {
-        requestId: 'R002',
-        divisionId: 'FD Division',
-        item: 'TF Mixture',
-        unit: 'Pkts',
-        quantity: 12,
-        valueRs: 15000,
-        availability: 61,
-        status: 'PENDING',
-        createdAt: '2025-10-24'
-    },
-    {
-        requestId: 'R003',
-        divisionId: 'MK Division',
-        item: 'Alawanqu',
-        unit: 'Nos',
-        quantity: 1,
-        valueRs: 6100,
-        availability: 1,
-        status: 'PENDING',
-        createdAt: '2025-10-24'
+const API_URL = 'http://localhost:8083/api/transactions';
+
+export const fetchStockRequests = async (): Promise<StockTransaction[]> => {
+    try {
+        const response = await axios.get<StockTransaction[]>(API_URL);
+        // Filter for PENDING requests only? Or all? Let's return all for now or filter in UI
+        return response.data.filter(t => t.status === 'PENDING');
+    } catch (error) {
+        console.error("Failed to fetch stock transactions", error);
+        return [];
     }
-];
-
-export const fetchStockRequests = async (): Promise<StockRequest[]> => {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve(MOCK_STOCK_REQUESTS), 800);
-    });
 };
+
+export const approveRequest = async (id: string): Promise<StockTransaction> => {
+    const response = await axios.put(`${API_URL}/${id}/approve`);
+    return response.data;
+};
+
+export const rejectRequest = async (id: string): Promise<StockTransaction> => {
+    const response = await axios.put(`${API_URL}/${id}/reject`);
+    return response.data;
+};
+
