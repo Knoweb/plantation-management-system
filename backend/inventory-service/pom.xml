@@ -9,8 +9,8 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>operations-service</artifactId>
-    <description>Core logic for Muster, Harvest and Field Operations</description>
+    <artifactId>inventory-service</artifactId>
+    <description>Manages Stock, GRN, Issues and Suppliers</description>
 
     <dependencies>
         <dependency>
