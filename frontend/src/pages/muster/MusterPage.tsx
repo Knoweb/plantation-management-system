@@ -5,20 +5,33 @@ import { fetchMusterLogs } from '../../features/muster/api/musterApi';
 import type { MusterLog, AttendanceRecord } from '../../features/muster/model/muster';
 import { Add, CheckCircle, Warning } from '@mui/icons-material';
 
+import { MusterDialog } from './MusterDialog';
+
 export const MusterPage = () => {
     const [logs, setLogs] = useState<MusterLog[]>([]);
     const [loading, setLoading] = useState(true);
+    const [isDialogOpen, setDialogOpen] = useState(false);
 
-    useEffect(() => {
+    const loadData = () => {
+        setLoading(true);
         fetchMusterLogs().then(data => {
             setLogs(data);
             setLoading(false);
         });
+    };
+
+    useEffect(() => {
+        loadData();
     }, []);
 
     const columns: GridColDef[] = [
         { field: 'date', headerName: 'Date', width: 120 },
-        { field: 'divisionId', headerName: 'Division', width: 130 },
+        {
+            field: 'division',
+            headerName: 'Division',
+            width: 150,
+            valueGetter: (params, row) => row.division?.name || 'N/A'
+        },
         {
             field: 'attendanceCount',
             headerName: 'Workers',
@@ -56,10 +69,16 @@ export const MusterPage = () => {
                 <Typography variant="h4" fontWeight="bold" color="primary.dark">
                     Muster Logs
                 </Typography>
-                <Button variant="contained" startIcon={<Add />}>
+                <Button variant="contained" startIcon={<Add />} onClick={() => setDialogOpen(true)}>
                     New Muster
                 </Button>
             </Box>
+
+            <MusterDialog
+                open={isDialogOpen}
+                onClose={() => setDialogOpen(false)}
+                onSuccess={loadData}
+            />
 
             <Card sx={{ height: 500, width: '100%', p: 2 }}>
                 <DataGrid

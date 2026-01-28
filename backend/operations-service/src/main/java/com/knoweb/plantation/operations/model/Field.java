@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Field {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "field_id")
     private UUID fieldId;
 

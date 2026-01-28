@@ -5,24 +5,38 @@ import { fetchHarvestLogs } from '../../features/harvest/api/harvestApi';
 import type { HarvestLog } from '../../features/harvest/model/harvest';
 import { Add, Agriculture } from '@mui/icons-material';
 
+import { HarvestDialog } from './HarvestDialog';
+
 export const HarvestPage = () => {
     const [logs, setLogs] = useState<HarvestLog[]>([]);
     const [loading, setLoading] = useState(true);
+    const [isDialogOpen, setDialogOpen] = useState(false);
 
-    useEffect(() => {
+    const loadData = () => {
+        setLoading(true);
         fetchHarvestLogs().then(data => {
             setLogs(data);
             setLoading(false);
         });
+    };
+
+    useEffect(() => {
+        loadData();
     }, []);
 
     const columns: GridColDef[] = [
         { field: 'date', headerName: 'Date', width: 120 },
-        { field: 'fieldId', headerName: 'Field ID', width: 130 },
+        {
+            field: 'field',
+            headerName: 'Field No',
+            width: 130,
+            valueGetter: (params, row) => row.field?.fieldNo || 'N/A'
+        },
         {
             field: 'cropType',
             headerName: 'Crop',
             width: 100,
+            valueGetter: (params, row) => row.field?.cropType || 'N/A',
             renderCell: (params) => (
                 <Chip
                     icon={<Agriculture sx={{ fontSize: 16 }} />}
@@ -40,7 +54,10 @@ export const HarvestPage = () => {
             type: 'number',
             align: 'right',
             headerAlign: 'right',
-            valueFormatter: (value: number) => `${value.toFixed(1)} kg`
+            valueFormatter: (params) => {
+                if (params == null) return '-';
+                return `${Number(params).toFixed(1)} kg`;
+            }
         },
         {
             field: 'quality',
@@ -64,10 +81,16 @@ export const HarvestPage = () => {
                 <Typography variant="h4" fontWeight="bold" color="primary.dark">
                     Harvest Logs
                 </Typography>
-                <Button variant="contained" startIcon={<Add />}>
+                <Button variant="contained" startIcon={<Add />} onClick={() => setDialogOpen(true)}>
                     Record Harvest
                 </Button>
             </Box>
+
+            <HarvestDialog
+                open={isDialogOpen}
+                onClose={() => setDialogOpen(false)}
+                onSuccess={loadData}
+            />
 
             <Card sx={{ height: 500, width: '100%', p: 2 }}>
                 <DataGrid

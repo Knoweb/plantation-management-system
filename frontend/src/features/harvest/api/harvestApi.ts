@@ -3,6 +3,7 @@ import type { HarvestLog } from '../model/harvest';
 
 
 const API_URL = 'http://localhost:8082/api/v1/operations/harvest';
+const FIELDS_URL = 'http://localhost:8082/api/v1/operations/fields';
 const TENANT_ID = '00000000-0000-0000-0000-000000000000'; // Temporary Hardcoded Tenant
 
 export const fetchHarvestLogs = async (): Promise<HarvestLog[]> => {
@@ -18,3 +19,12 @@ export const fetchHarvestLogs = async (): Promise<HarvestLog[]> => {
     }
 };
 
+export const fetchFields = async (): Promise<any[]> => {
+    const response = await axios.get(FIELDS_URL);
+    return response.data;
+};
+
+export const submitHarvestLog = async (log: HarvestLog): Promise<HarvestLog> => {
+    const response = await axios.post<HarvestLog>(API_URL, log);
+    return response.data;
+};

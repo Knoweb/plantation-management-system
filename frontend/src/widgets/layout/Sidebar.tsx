@@ -4,11 +4,13 @@ import {
     List,
     ListItem,
     ListItemButton,
+    ListItemIcon,
     ListItemText,
     Typography,
     useTheme
 } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Dashboard, Agriculture, Inventory, ListAlt, People } from '@mui/icons-material';
 
 const drawerWidth = 240;
 
@@ -19,9 +21,11 @@ const menuItems = [
     { text: 'FD Division', path: '/dashboard/division/fd' },
     { text: 'MK Division', path: '/dashboard/division/mk' },
     { text: 'Stock', path: '/dashboard/stock' },
-    { text: 'Fertilizer Program', path: '/dashboard/fertilizer' },
-    { text: 'Crop Books', path: '/dashboard/harvest' }, // Mapping Harvest to Crop Books for now
-    { text: 'Order Approval', path: '/dashboard/orders' },
+    { text: 'Overview', icon: <Dashboard />, path: '/dashboard' },
+    { text: 'Digital Muster', icon: <People />, path: '/dashboard/digital-muster' },
+    { text: 'Muster Logs', icon: <ListAlt />, path: '/dashboard/muster' },
+    { text: 'Crop Books', icon: <Agriculture />, path: '/dashboard/harvest' },
+    { text: 'Stock Approvals', icon: <Inventory />, path: '/dashboard/orders' },
     { text: 'KPI', path: '/dashboard/kpi' },
     { text: 'Work Distribution', path: '/dashboard/work-distribution' },
 ];

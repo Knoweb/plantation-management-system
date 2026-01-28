@@ -16,7 +16,7 @@ import java.util.UUID;
 public class HarvestLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "harvest_id")
     private UUID harvestId;
 

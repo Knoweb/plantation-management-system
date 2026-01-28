@@ -5,14 +5,21 @@ export interface AttendanceRecord {
     task?: string;
 }
 
+export interface Division {
+    divisionId: string;
+    name: string;
+    code: string;
+}
+
 export interface MusterLog {
-    musterId: string;
+    musterId?: string;
     tenantId: string;
     date: string; // ISO Date
-    divisionId: string;
+    division?: Division;
+    divisionId?: string; // For form payload
     fieldOfficerId?: string;
     attendanceData: string; // JSON string of AttendanceRecord[]
     isApproved: boolean;
     approvedBy?: string;
-    createdAt: string;
+    createdAt?: string;
 }

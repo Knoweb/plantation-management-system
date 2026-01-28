@@ -28,14 +28,14 @@ export const LoginPage = () => {
                 <Grid container spacing={8} alignItems="center">
 
                     {/* Left Side: Estate Name */}
-                    <Grid item xs={12} md={6}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <Typography variant="h3" component="h1" fontWeight="bold" color="primary.dark" sx={{ textAlign: { xs: 'center', md: 'left' } }}>
                             Dunwatta Estate
                         </Typography>
                     </Grid>
 
                     {/* Right Side: Login Form */}
-                    <Grid item xs={12} md={6}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <Box component="form" onSubmit={handleLogin} sx={{ maxWidth: 400, mx: 'auto' }}>
                             <Box sx={{ mb: 3 }}>
                                 <Typography variant="body1" fontWeight="500" gutterBottom>

@@ -4,10 +4,12 @@ import { LoginPage } from './pages/login/LoginPage';
 import { DashboardLayout } from './widgets/layout/DashboardLayout';
 import { DashboardPage } from './pages/dashboard/DashboardPage';
 import { MusterPage } from './pages/muster/MusterPage';
+import { DigitalMusterPage } from './pages/muster/DigitalMusterPage';
 import { HarvestPage } from './pages/harvest/HarvestPage';
 import { StockApprovalPage } from './pages/stock/StockApprovalPage';
 import { FieldOfficerLayout } from './widgets/layout/FieldOfficerLayout';
 import { MorningMusterPage } from './pages/field-dashboard/MorningMusterPage';
+import { WorkProgramPage } from './pages/field-dashboard/WorkProgramPage';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
@@ -23,6 +25,7 @@ function App() {
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<DashboardPage />} />
             <Route path="muster" element={<MusterPage />} />
+            <Route path="digital-muster" element={<DigitalMusterPage />} />
             <Route path="harvest" element={<HarvestPage />} />
             <Route path="orders" element={<StockApprovalPage />} />
           </Route>

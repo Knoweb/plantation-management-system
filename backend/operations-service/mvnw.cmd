@@ -25,7 +25,7 @@ echo Downloading Maven Wrapper...
 powershell -Command "(New-Object Net.WebClient).DownloadFile('%WRAPPER_URL%', '%WRAPPER_JAR%')"
 
 :run
-%MAVEN_JAVA_EXE% -classpath "%WRAPPER_JAR%" %WRAPPER_LAUNCHER% %*
+%MAVEN_JAVA_EXE% --enable-native-access=ALL-UNNAMED -Dmaven.multiModuleProjectDirectory="%MAVEN_PROJECTBASEDIR%" -Dstyle.color=never -Dmaven.color=false -classpath "%WRAPPER_JAR%" %WRAPPER_LAUNCHER% %*
 
 :fail
 exit /b 1

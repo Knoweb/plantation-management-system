@@ -10,7 +10,7 @@ import java.util.UUID;
 public class Division {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "division_id")
     private UUID divisionId;
 

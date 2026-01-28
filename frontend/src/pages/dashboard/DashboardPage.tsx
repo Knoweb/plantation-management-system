@@ -1,4 +1,5 @@
 import { Typography, Grid, Paper, Box } from '@mui/material';
+import { DailyInsights } from '../../features/ai/components/DailyInsights';
 
 export const DashboardPage = () => {
     return (
@@ -11,7 +12,7 @@ export const DashboardPage = () => {
                     { title: 'Active Fields', value: '12', sub: '3 requiring attention', color: '#E3F2FD', text: '#1565C0' },
                     { title: 'Pending Issues', value: '5', sub: '2 High Priority', color: '#FFEBEE', text: '#C62828' },
                 ].map((kpi) => (
-                    <Grid item xs={12} sm={6} md={3} key={kpi.title}>
+                    <Grid size={{ xs: 12, sm: 6, md: 3 }} key={kpi.title}>
                         <Paper
                             elevation={0}
                             sx={{
@@ -47,7 +48,7 @@ export const DashboardPage = () => {
                 ))}
 
                 {/* Big Chart Area Placeholder */}
-                <Grid item xs={12} md={8}>
+                <Grid size={{ xs: 12, md: 8 }}>
                     <Paper sx={{ p: 3, height: 400, borderRadius: 4 }}>
                         <Typography variant="h6" gutterBottom>Weekly Production</Typography>
                         <Box sx={{ height: '90%', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: '#FAFAFA', borderRadius: 3 }}>
@@ -56,14 +57,9 @@ export const DashboardPage = () => {
                     </Paper>
                 </Grid>
 
-                {/* Recent Activity Placeholder */}
-                <Grid item xs={12} md={4}>
-                    <Paper sx={{ p: 3, height: 400, borderRadius: 4 }}>
-                        <Typography variant="h6" gutterBottom>Recent Activity</Typography>
-                        <Box sx={{ height: '90%', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: '#FAFAFA', borderRadius: 3 }}>
-                            <Typography color="text.secondary">Activity Feed</Typography>
-                        </Box>
-                    </Paper>
+                {/* Recent Activity / AI Insights */}
+                <Grid size={{ xs: 12, md: 4 }}>
+                    <DailyInsights />
                 </Grid>
             </Grid>
         </Box>

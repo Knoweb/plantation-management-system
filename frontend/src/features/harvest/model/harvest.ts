@@ -1,12 +1,22 @@
+export interface Field {
+    fieldId: string;
+    fieldNo: string;
+    cropType: string;
+    areaAcres: number;
+    division?: any;
+}
+
 export interface HarvestLog {
-    harvestId: string;
+    harvestId?: string;
     tenantId: string;
     date: string; // ISO Date
-    divisionId: string;
-    fieldId: string;
-    cropType: 'TEA' | 'RUBBER' | 'COCONUT';
-    totalWeightKg: number;
-    rejectedWeightKg: number;
-    netWeightKg: number; // calculated
-    createdAt: string;
+    field?: Field;
+    fieldId?: string; // For form payload
+    quantityKg: number; // Raw weight
+    deductionKg: number;
+    netWeightKg?: number; // calculated
+    workerCount: number;
+    yieldPerWorker?: number;
+    weatherCondition: string;
+    createdAt?: string;
 }

@@ -1,9 +1,8 @@
 package com.knoweb.plantation.operations.model;
 
-import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,7 +14,7 @@ import java.util.UUID;
 public class MusterLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "muster_id")
     private UUID musterId;
 
@@ -35,7 +34,9 @@ public class MusterLog {
     // The Critical JSONB Field
     // Mapped as String for simplicity, or we can map to a List<AttendanceDto> POJO
     // Using String (raw JSON) offers maximum flexibility for now.
-    @Type(JsonType.class)
+    // The Critical JSONB Field
+    // Native Hibernate 6 Support
+    @JdbcTypeCode(org.hibernate.type.SqlTypes.JSON)
     @Column(name = "attendance_data", columnDefinition = "jsonb")
     private String attendanceData;
 
