@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>api-gateway</artifactId>
+    <description>Entry point for all client requests</description>
 
     <dependencies>
         <dependency>
@@ -19,6 +20,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- Resilience4j for Circuit Breaking -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
         </dependency>
     </dependencies>
 </project>

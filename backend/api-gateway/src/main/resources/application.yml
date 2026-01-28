@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: identity-service
+          uri: lb://identity-service
+          predicates:
+            - Path=/api/v1/auth/**
+        - id: operations-service
+          uri: lb://operations-service
+          predicates:
+            - Path=/api/v1/operations/**
+        - id: inventory-service
+          uri: lb://inventory-service
+          predicates:
+            - Path=/api/v1/inventory/**
+        - id: finance-service
+          uri: lb://finance-service
+          predicates:
+            - Path=/api/v1/finance/**
