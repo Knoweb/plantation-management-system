@@ -15,10 +15,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FieldController {
 
+    private final java.util.UUID defaultTenantId = java.util.UUID.fromString("00000000-0000-0000-0000-000000000000");
+
     private final FieldRepository fieldRepository;
 
     @GetMapping
     public ResponseEntity<List<Field>> getAllFields() {
-        return ResponseEntity.ok(fieldRepository.findAll());
+        return ResponseEntity.ok(fieldRepository.findByTenantId(defaultTenantId));
     }
 }

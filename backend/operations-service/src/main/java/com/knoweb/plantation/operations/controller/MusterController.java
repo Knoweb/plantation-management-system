@@ -16,18 +16,21 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MusterController {
 
+    private final java.util.UUID defaultTenantId = java.util.UUID.fromString("00000000-0000-0000-0000-000000000000");
+
     private final MusterService musterService;
 
     @PostMapping
     public ResponseEntity<MusterLog> submitMuster(@RequestBody MusterLog musterLog) {
+        musterLog.setTenantId(defaultTenantId);
         return ResponseEntity.ok(musterService.submitMuster(musterLog));
     }
 
     @GetMapping
     public ResponseEntity<List<MusterLog>> getMusterLogs(
-            @RequestParam UUID tenantId,
+            @RequestParam(required = false) UUID tenantId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return ResponseEntity.ok(musterService.getMusterByDate(tenantId, date));
+        return ResponseEntity.ok(musterService.getMusterByDate(defaultTenantId, date));
     }
 
     @PutMapping("/{musterId}/approve")

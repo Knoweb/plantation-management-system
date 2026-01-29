@@ -18,6 +18,9 @@ public class StockTransaction {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @jakarta.persistence.Column(name = "tenant_id", nullable = false)
+    private UUID tenantId;
+
     @ManyToOne
     @JoinColumn(name = "item_id")
     private InventoryItem item;
@@ -31,9 +34,11 @@ public class StockTransaction {
     public StockTransaction() {
     }
 
-    public StockTransaction(UUID id, InventoryItem item, String transactionType, Double quantity, LocalDateTime date,
+    public StockTransaction(UUID id, UUID tenantId, InventoryItem item, String transactionType, Double quantity,
+            LocalDateTime date,
             String reference, String status) {
         this.id = id;
+        this.tenantId = tenantId;
         this.item = item;
         this.transactionType = transactionType;
         this.quantity = quantity;
@@ -48,6 +53,14 @@ public class StockTransaction {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public UUID getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(UUID tenantId) {
+        this.tenantId = tenantId;
     }
 
     public InventoryItem getItem() {

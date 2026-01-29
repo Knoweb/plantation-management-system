@@ -2,7 +2,7 @@ import { ThemeProvider, CssBaseline } from '@mui/material';
 import { theme } from './app/providers/theme';
 import { LoginPage } from './pages/login/LoginPage';
 import { DashboardLayout } from './widgets/layout/DashboardLayout';
-import { DashboardPage } from './pages/dashboard/DashboardPage';
+import { ManagerDashboard } from './pages/dashboard/ManagerDashboard';
 import { MusterPage } from './pages/muster/MusterPage';
 import { DigitalMusterPage } from './pages/muster/DigitalMusterPage';
 import { HarvestPage } from './pages/harvest/HarvestPage';
@@ -24,7 +24,7 @@ function App() {
 
           {/* Manager Dashboard Routes */}
           <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route index element={<DashboardPage />} />
+            <Route index element={<ManagerDashboard />} />
             <Route path="muster" element={<MusterPage />} />
             <Route path="digital-muster" element={<DigitalMusterPage />} />
             <Route path="harvest" element={<HarvestPage />} />

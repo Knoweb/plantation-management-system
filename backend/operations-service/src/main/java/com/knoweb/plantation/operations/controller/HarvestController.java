@@ -16,17 +16,20 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class HarvestController {
 
+    private final java.util.UUID defaultTenantId = java.util.UUID.fromString("00000000-0000-0000-0000-000000000000");
+
     private final HarvestService harvestService;
 
     @PostMapping
     public ResponseEntity<HarvestLog> recordHarvest(@RequestBody HarvestLog harvestLog) {
+        harvestLog.setTenantId(defaultTenantId);
         return ResponseEntity.ok(harvestService.recordHarvest(harvestLog));
     }
 
     @GetMapping
     public ResponseEntity<List<HarvestLog>> getDailyCrop(
-            @RequestParam UUID tenantId,
+            @RequestParam(required = false) UUID tenantId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return ResponseEntity.ok(harvestService.getDailyCrop(tenantId, date));
+        return ResponseEntity.ok(harvestService.getDailyCrop(defaultTenantId, date));
     }
 }

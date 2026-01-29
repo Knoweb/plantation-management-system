@@ -42,7 +42,7 @@ export const StockApprovalPage = () => {
         {
             field: 'itemName',
             headerName: 'Item',
-            width: 180,
+            flex: 1,
             headerClassName: 'super-app-theme--header',
             valueGetter: (params, row) => row.item?.name
         },

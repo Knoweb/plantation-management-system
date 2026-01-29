@@ -16,6 +16,8 @@ import java.util.UUID;
 @Service
 public class StockService {
 
+    private final UUID defaultTenantId = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
     @Autowired
     private StockTransactionRepository stockTransactionRepository;
 
@@ -23,7 +25,7 @@ public class StockService {
     private InventoryItemRepository inventoryItemRepository;
 
     public List<StockTransaction> getAllTransactions() {
-        return stockTransactionRepository.findAll();
+        return stockTransactionRepository.findByTenantId(defaultTenantId);
     }
 
     @Transactional
@@ -35,6 +37,8 @@ public class StockService {
         if (transaction.getDate() == null) {
             transaction.setDate(LocalDateTime.now());
         }
+
+        transaction.setTenantId(defaultTenantId);
 
         // Ensure the item exists
         Optional<InventoryItem> itemOpt = inventoryItemRepository.findById(transaction.getItem().getId());

@@ -15,12 +15,14 @@ import java.util.UUID;
 @CrossOrigin(origins = "*") // Allow frontend access
 public class InventoryController {
 
+    private final UUID defaultTenantId = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
     @Autowired
     private InventoryItemRepository inventoryItemRepository;
 
     @GetMapping
     public List<InventoryItem> getAllItems() {
-        return inventoryItemRepository.findAll();
+        return inventoryItemRepository.findByTenantId(defaultTenantId);
     }
 
     @GetMapping("/{id}")
@@ -32,6 +34,7 @@ public class InventoryController {
 
     @PostMapping
     public InventoryItem createItem(@RequestBody InventoryItem item) {
+        item.setTenantId(defaultTenantId);
         return inventoryItemRepository.save(item);
     }
 

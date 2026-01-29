@@ -23,3 +23,13 @@ export interface MusterLog {
     approvedBy?: string;
     createdAt?: string;
 }
+
+export interface Field {
+    fieldId: string;
+    tenantId?: string;
+    division?: Division;
+    fieldNo: string;
+    cropType: 'TEA' | 'RUBBER' | 'CINNAMON' | 'COCONUT' | string;
+    areaAcres: number;
+    lastHarvestDate?: string;
+}

@@ -15,10 +15,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DivisionController {
 
+    private final java.util.UUID defaultTenantId = java.util.UUID.fromString("00000000-0000-0000-0000-000000000000");
+
     private final DivisionRepository divisionRepository;
 
     @GetMapping
     public ResponseEntity<List<Division>> getAllDivisions() {
-        return ResponseEntity.ok(divisionRepository.findAll());
+        return ResponseEntity.ok(divisionRepository.findByTenantId(defaultTenantId));
     }
 }

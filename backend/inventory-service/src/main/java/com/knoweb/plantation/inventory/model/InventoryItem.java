@@ -15,6 +15,9 @@ public class InventoryItem {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @jakarta.persistence.Column(name = "tenant_id", nullable = false)
+    private UUID tenantId;
+
     private String name;
     private String type; // FERTILIZER, CHEMICAL, TOOL
     private String unit; // KG, L, UNIT
@@ -26,9 +29,11 @@ public class InventoryItem {
     public InventoryItem() {
     }
 
-    public InventoryItem(UUID id, String name, String type, String unit, Double quantityOnHand, Double reorderLevel,
+    public InventoryItem(UUID id, UUID tenantId, String name, String type, String unit, Double quantityOnHand,
+            Double reorderLevel,
             Double unitPrice) {
         this.id = id;
+        this.tenantId = tenantId;
         this.name = name;
         this.type = type;
         this.unit = unit;
@@ -43,6 +48,14 @@ public class InventoryItem {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public UUID getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(UUID tenantId) {
+        this.tenantId = tenantId;
     }
 
     public String getName() {

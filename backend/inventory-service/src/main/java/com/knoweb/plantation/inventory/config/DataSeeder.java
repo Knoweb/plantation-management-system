@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
+import java.util.UUID;
 
 @Configuration
 public class DataSeeder {
@@ -14,7 +15,10 @@ public class DataSeeder {
     CommandLineRunner initDatabase(InventoryItemRepository itemRepository) {
         return args -> {
             if (itemRepository.count() == 0) {
+                UUID defaultTenantId = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
                 InventoryItem urea = new InventoryItem();
+                urea.setTenantId(defaultTenantId);
                 urea.setName("Urea 46%");
                 urea.setType("FERTILIZER");
                 urea.setUnit("KG");
@@ -23,6 +27,7 @@ public class DataSeeder {
                 urea.setUnitPrice(120.0);
 
                 InventoryItem dolomite = new InventoryItem();
+                dolomite.setTenantId(defaultTenantId);
                 dolomite.setName("Dolomite");
                 dolomite.setType("FERTILIZER");
                 dolomite.setUnit("KG");
@@ -31,6 +36,7 @@ public class DataSeeder {
                 dolomite.setUnitPrice(45.0);
 
                 InventoryItem roundup = new InventoryItem();
+                roundup.setTenantId(defaultTenantId);
                 roundup.setName("Roundup");
                 roundup.setType("CHEMICAL");
                 roundup.setUnit("L");
@@ -39,6 +45,7 @@ public class DataSeeder {
                 roundup.setUnitPrice(2500.0);
 
                 InventoryItem shears = new InventoryItem();
+                shears.setTenantId(defaultTenantId);
                 shears.setName("Pruning Shears");
                 shears.setType("TOOL");
                 shears.setUnit("UNIT");

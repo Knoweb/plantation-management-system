@@ -30,3 +30,19 @@ export const submitMusterLog = async (log: MusterLog): Promise<MusterLog> => {
     return response.data;
 };
 
+// Fields
+const FIELDS_URL = 'http://localhost:8082/api/v1/operations/fields';
+export const fetchFields = async (): Promise<any[]> => {
+    const response = await axios.get(FIELDS_URL);
+    return response.data;
+};
+
+export const approveMuster = async (musterId: string, approvedBy: string): Promise<MusterLog> => {
+    // Note: ensure operations-service is running on port 8080 or through gateway
+    // We hardcode the Tenant ID for now as per the Controller
+    const response = await axios.put(`${API_URL}/${musterId}/approve`, null, {
+        params: { approvedBy }
+    });
+    return response.data;
+};
+

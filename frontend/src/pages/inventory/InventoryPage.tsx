@@ -20,7 +20,7 @@ export const InventoryPage = () => {
     };
 
     const columns: GridColDef[] = [
-        { field: 'name', headerName: 'Item Name', flex: 1 },
+        { field: 'name', headerName: 'Item Name', flex: 1, minWidth: 250 },
         {
             field: 'type',
             headerName: 'Category',

@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+import java.util.List;
+
 @Repository
 public interface DivisionRepository extends JpaRepository<Division, UUID> {
+    List<Division> findByTenantId(UUID tenantId);
 }

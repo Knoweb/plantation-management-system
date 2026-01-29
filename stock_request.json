@@ -1,0 +1,9 @@
+{
+    "item": {
+        "id": "4a4d2688-2904-482e-b3e6-6e2f075efdf9"
+    },
+    "transactionType": "OUT",
+    "quantity": 100,
+    "reference": "REQ-001-GC",
+    "status": "PENDING"
+}

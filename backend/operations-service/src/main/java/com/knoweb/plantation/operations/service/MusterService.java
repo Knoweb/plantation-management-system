@@ -15,8 +15,21 @@ public class MusterService {
 
     private final MusterRepository musterRepository;
 
+    private final com.knoweb.plantation.operations.repository.DivisionRepository divisionRepository;
+
     public MusterLog submitMuster(MusterLog musterLog) {
-        // Here we could validate the JSON structure or check if Division exists
+        // Fix: Fetch the Division entity manually to ensure we have a managed entity
+        // The frontend sends a dummy object with just ID, which causes Hibernate
+        // validation to fail on other null fields.
+        if (musterLog.getDivision() != null && musterLog.getDivision().getDivisionId() != null) {
+            com.knoweb.plantation.operations.model.Division division = divisionRepository
+                    .findById(musterLog.getDivision().getDivisionId())
+                    .orElseThrow(() -> new RuntimeException("Division not found"));
+            musterLog.setDivision(division);
+        } else {
+            throw new RuntimeException("Division ID is required");
+        }
+
         return musterRepository.save(musterLog);
     }
 
