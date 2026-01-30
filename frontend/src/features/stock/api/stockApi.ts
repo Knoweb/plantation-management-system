@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { StockTransaction } from '../../inventory/model/inventory';
 
-const API_URL = 'http://localhost:8083/api/transactions';
+const API_URL = 'http://localhost:8084/api/transactions';
 
 export const fetchStockRequests = async (): Promise<StockTransaction[]> => {
     try {

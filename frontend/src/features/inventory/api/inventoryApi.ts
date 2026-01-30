@@ -1,8 +1,8 @@
 import axios from 'axios';
 import type { InventoryItem, StockTransaction } from '../model/inventory';
 
-const INVENTORY_API_URL = 'http://localhost:8083/api/inventory';
-const TRANSACTION_API_URL = 'http://localhost:8083/api/transactions';
+const INVENTORY_API_URL = 'http://localhost:8084/api/inventory';
+const TRANSACTION_API_URL = 'http://localhost:8084/api/transactions';
 
 export const fetchInventoryItems = async (): Promise<InventoryItem[]> => {
     try {

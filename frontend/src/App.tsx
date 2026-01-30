@@ -11,6 +11,8 @@ import { FieldOfficerLayout } from './widgets/layout/FieldOfficerLayout';
 import { MorningMusterPage } from './pages/field-dashboard/MorningMusterPage';
 import { WorkProgramPage } from './pages/field-dashboard/WorkProgramPage';
 import { InventoryPage } from './pages/inventory/InventoryPage';
+import { SuperAdminLayout } from './widgets/layout/SuperAdminLayout';
+import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
@@ -37,6 +39,11 @@ function App() {
             <Route index element={<Navigate to="program" replace />} />
             <Route path="program" element={<WorkProgramPage />} />
             <Route path="muster-morning" element={<MorningMusterPage />} />
+          </Route>
+
+          {/* Super Admin Routes */}
+          <Route path="/super-admin" element={<SuperAdminLayout />}>
+            <Route index element={<AdminDashboard />} />
           </Route>
 
           {/* Default Redirect */}

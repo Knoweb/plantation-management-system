@@ -12,7 +12,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/inventory")
-@CrossOrigin(origins = "*") // Allow frontend access
 public class InventoryController {
 
     private final UUID defaultTenantId = UUID.fromString("00000000-0000-0000-0000-000000000000");

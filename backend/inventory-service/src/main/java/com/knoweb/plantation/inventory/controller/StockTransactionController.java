@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/transactions")
-@CrossOrigin(origins = "*")
 public class StockTransactionController {
 
     @Autowired

@@ -117,7 +117,7 @@ export const ManagerDashboard = () => {
             <Grid container spacing={3}>
                 {/* 1. KPIs */}
                 {kpis.map((kpi) => (
-                    <Grid item xs={12} sm={6} md={3} key={kpi.title}>
+                    <Grid key={kpi.title} size={{ xs: 12, sm: 6, md: 3 }}>
                         <Paper
                             elevation={0}
                             sx={{
@@ -164,7 +164,7 @@ export const ManagerDashboard = () => {
                 ))}
 
                 {/* 2. Pending Approvals Widget (Combined Stock & Muster) */}
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                     <Paper sx={{ p: 0, borderRadius: 2, height: '100%', border: '1px solid #ddd', overflow: 'hidden' }} elevation={0}>
                         <Box sx={{ p: 2, borderBottom: '1px solid #eee' }}>
                             <Typography variant="h6" fontWeight="bold">
@@ -229,7 +229,7 @@ export const ManagerDashboard = () => {
                 </Grid>
 
                 {/* 3. Crop Book Widget */}
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                     <Paper sx={{ p: 0, borderRadius: 2, height: '100%', border: '1px solid #ddd', overflow: 'hidden' }} elevation={0}>
                         <Box sx={{ p: 2, borderBottom: '1px solid #eee' }}>
                             <Typography variant="h6" fontWeight="bold">

@@ -5,97 +5,116 @@ import {
     TextField,
     Typography,
     Link,
-    InputAdornment,
     Paper,
-    Container
+    CssBaseline,
+    Alert,
+    useMediaQuery,
+    useTheme
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import ForestIcon from '@mui/icons-material/Forest'; // Using an icon instead of an image for branding
+import { login } from '../../features/auth/api/authApi';
+import Illustration from '../../assets/login-illustration.png';
 
 export const LoginPage = () => {
     const navigate = useNavigate();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+    // Defaulting domain to 'lanka' as per UI request to hide the field
+    const [domain] = useState('lanka');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState<string | null>(null);
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Mock Login Logic
-        sessionStorage.setItem('token', 'mock-jwt-token-000');
-        sessionStorage.setItem('tenantId', '00000000-0000-0000-0000-000000000000');
-        navigate('/dashboard');
+        setError(null);
+        try {
+            const response = await login({ domain, username: email, password });
+
+            // Store Session Data
+            sessionStorage.setItem('token', response.token);
+            sessionStorage.setItem('tenantId', response.tenantId);
+            sessionStorage.setItem('role', response.role);
+            sessionStorage.setItem('user', JSON.stringify({ id: response.userId, name: response.fullName }));
+
+            navigate('/dashboard');
+        } catch (err: any) {
+            console.error(err);
+            setError('Login failed. Please check your username and password.');
+        }
     };
 
     return (
-        <Box
-            sx={{
-                minHeight: '100vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%)', // Premium Green Gradient
-                p: 2
-            }}
-        >
-            <Container maxWidth="xs">
-                <Paper
-                    elevation={24}
+        <Box component="main" sx={{ height: '100vh', width: '100vw', display: 'flex', bgcolor: '#FFFFFF', overflow: 'hidden' }}>
+            <CssBaseline />
+
+            {/* Left Side: Illustration Container */}
+            <Box
+                sx={{
+                    flex: 1, // Takes up 50% of space
+                    display: { xs: 'none', md: 'flex' }, // Hide on mobile
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    bgcolor: '#FFFFFF',
+                    position: 'relative',
+                    p: 4
+                }}
+            >
+                <Box
+                    component="img"
+                    src={Illustration}
+                    alt="Login Illustration"
                     sx={{
-                        p: 4,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        borderRadius: 2,
-                        bgcolor: 'rgba(255, 255, 255, 0.95)', // Slightly translucent white
-                        backdropFilter: 'blur(10px)'
+                        maxWidth: '100%',
+                        maxHeight: '80%',
+                        objectFit: 'contain',
+                        zIndex: 2
                     }}
-                >
-                    {/* Branding / Logo Area */}
-                    <Box
-                        sx={{
-                            width: 60,
-                            height: 60,
-                            borderRadius: '50%',
-                            bgcolor: '#1b5e20',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            mb: 2,
-                            boxShadow: 3
-                        }}
-                    >
-                        <ForestIcon sx={{ fontSize: 32, color: '#FFD700' }} />
-                    </Box>
+                />
+            </Box>
 
-                    <Typography component="h1" variant="h5" fontWeight="bold" color="primary.dark" sx={{ mb: 0.5 }}>
-                        Dunwatta Estate
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
-                        Plantation Management System
+            {/* Right Side: Form Container */}
+            <Box
+                sx={{
+                    flex: 1, // Takes up remaining 50%
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    p: { xs: 4, md: 10 },
+                    bgcolor: '#FFFFFF'
+                }}
+            >
+                <Box sx={{ width: '100%', maxWidth: 400 }}>
+                    <Typography component="h1" variant="h6" sx={{ mb: 1, fontWeight: 700, color: '#333' }}>
+                        Please login to your account
                     </Typography>
 
-                    {/* Login Form */}
-                    <Box component="form" noValidate onSubmit={handleLogin} sx={{ width: '100%' }}>
+                    {error && (
+                        <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
+                            {error}
+                        </Alert>
+                    )}
+
+                    <Box component="form" noValidate onSubmit={handleLogin} sx={{ mt: 3, width: '100%' }}>
+
                         <TextField
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
+                            id="username"
                             label="Username"
-                            name="email"
-                            autoComplete="email"
+                            name="username"
+                            autoComplete="username"
                             autoFocus
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <PersonOutlineIcon color="action" />
-                                    </InputAdornment>
-                                ),
+                            size="medium"
+                            sx={{
+                                mb: 2,
+                                '& .MuiOutlinedInput-root': { borderRadius: 1 }
                             }}
-                            sx={{ mb: 2 }}
                         />
                         <TextField
                             margin="normal"
@@ -108,71 +127,57 @@ export const LoginPage = () => {
                             autoComplete="current-password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <LockOutlinedIcon color="action" />
-                                    </InputAdornment>
-                                ),
+                            size="medium"
+                            sx={{
+                                mb: 1,
+                                '& .MuiOutlinedInput-root': { borderRadius: 1 }
                             }}
                         />
-
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1, mb: 2 }}>
-                            <Link href="#" variant="body2" sx={{ color: '#2e7d32', fontWeight: 500 }}>
-                                Forgot password?
-                            </Link>
-                        </Box>
 
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            size="large"
                             sx={{
+                                mt: 3,
+                                mb: 2,
+                                bgcolor: '#00695C', // Matching the teal/dark cyan
+                                color: 'white',
                                 py: 1.5,
                                 fontSize: '1rem',
-                                fontWeight: 'bold',
-                                borderRadius: 1.5,
-                                bgcolor: '#1b5e20',
-                                '&:hover': {
-                                    bgcolor: '#003300',
-                                },
+                                fontWeight: 600,
+                                borderRadius: 1,
+                                textTransform: 'none',
+                                '&:hover': { bgcolor: '#004D40' }
                             }}
                         >
-                            Sign In
+                            Login
                         </Button>
-                    </Box>
 
-                    {/* Footer */}
-                    <Box sx={{ mt: 4, textAlign: 'center' }}>
-                        <Typography variant="caption" color="text.secondary">
-                            Powered By
-                        </Typography>
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
-                            <Box sx={{
-                                width: 12,
-                                height: 12,
-                                borderRadius: '50%',
-                                bgcolor: '#FFD700',
-                                position: 'relative',
-                                '&::after': {
-                                    content: '""',
-                                    position: 'absolute',
-                                    top: -2,
-                                    right: -2,
-                                    width: 6,
-                                    height: 6,
-                                    borderRadius: '50% 0 50% 0',
-                                    bgcolor: '#4CAF50'
-                                }
-                            }} />
-                            <Typography variant="caption" fontWeight="bold" sx={{ color: '#00695C' }}>
-                                Plantec Ceylon (Pvt) Ltd.
+                        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: 1 }}>
+                            <Link href="#" variant="body2" sx={{ color: '#555', textDecoration: 'none', fontSize: '0.9rem' }}>
+                                Forgot password?
+                            </Link>
+                        </Box>
+
+                        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: 4, alignItems: 'center' }}>
+                            <Typography variant="body2" color="text.secondary" sx={{ mr: 1 }}>
+                                Don't have an account?
                             </Typography>
+                            <Button variant="outlined" sx={{ color: '#00D09C', borderColor: '#00D09C', fontWeight: 'bold', textTransform: 'uppercase' }}>
+                                CREATE NEW
+                            </Button>
                         </Box>
                     </Box>
-                </Paper>
-            </Container>
+                </Box>
+
+                {/* Fixed Footer */}
+                <Box sx={{ position: 'absolute', bottom: 20 }}>
+                    <Typography variant="caption" color="text.secondary">
+                        Powered By <span style={{ fontWeight: 'bold', color: '#00695C' }}>Plantec Ceylon (Pvt) Ltd.</span>
+                    </Typography>
+                </Box>
+            </Box>
         </Box>
     );
 };
